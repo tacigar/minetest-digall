@@ -53,7 +53,7 @@ local _nodelist = {}
 local _methodlist = { "none" }
 minetest.after(0, function()
 	for nodename, nodedef in pairs(minetest.registered_nodes) do
-		if nodedef.description ~= "" and (not (minetest.get_node_group(nodename, "not_in_creative_inventory") > 0)) then
+		if (not nodedef.connects_to) and nodedef.description ~= "" and (not (minetest.get_node_group(nodename, "not_in_creative_inventory") > 0)) then
 			table.insert(_nodelist, nodename)
 		end
 	end
