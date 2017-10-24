@@ -107,6 +107,12 @@ function digall.associate_node_and_method(playername, nodename, methodname, args
 	return true, "association success"
 end
 
+--- Clears an association of the node.
+function digall.clear_association(playername, nodename)
+	_detail.player_data[playername].association[nodename] = nil
+	return true, "association is cleared"
+end
+
 --- Sets the default association to the player.
 function digall.set_default_association(playername)
 	for nodename, nodedef in pairs(minetest.registered_nodes) do

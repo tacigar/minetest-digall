@@ -141,14 +141,19 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 	elseif fields.methodlist then
 		local methodidx = tonumber(fields.methodlist:match("%w+:(%d+)"))
+		local methodname = _methodlist[methodidx]
 		local nodeidx = _player_formspec[name].nodeidx
 		_player_formspec[name].methodidx = methodidx
-
 		local nodename = _nodelist[nodeidx]
-		local methodname = _methodlist[methodidx]
-		local args = digall.registered_methods[methodname].default_arguments
 
-		digall.associate_node_and_method(name, nodename, methodname, args)
+		if methodname == "none" then
+			digall.clear_association(name, nodename)
+			return
+		else
+			local args = digall.registered_methods[methodname].default_arguments
+			digall.associate_node_and_method(name, nodename, methodname, args)
+		end
+
 		minetest.show_formspec(name, "digall:gui", _create_formspec(name, nodeidx, methodidx))
 
 	elseif fields.ok then
