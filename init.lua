@@ -49,17 +49,21 @@ _load_config_file()
 
 minetest.after(0, function()
 	for nodename, nodedef in pairs(minetest.registered_nodes) do
-		local after_dig_node
-		local prev_after_dig_node = nodedef.after_dig_node
-		if prev_after_dig_node then
-			after_dig_node = function(pos, oldnode, oldmetadata, digger)
-				_digall(pos, oldnode, oldmetadata, digger)
-				prev_after_dig_node(pos, oldnode, oldmetadata, digger)
+		if not nodedef.connects_to then -- avoid connects_to node bug.
+			local after_dig_node
+			local prev_after_dig_node = nodedef.after_dig_node
+
+			if prev_after_dig_node then
+				after_dig_node = function(pos, oldnode, oldmetadata, digger)
+					_digall(pos, oldnode, oldmetadata, digger)
+					prev_after_dig_node(pos, oldnode, oldmetadata, digger)
+				end
+			else
+				after_dig_node = _digall
 			end
-		else
-			after_dig_node = _digall
+
+			minetest.override_item(nodename, { after_dig_node = after_dig_node })
 		end
-		minetest.override_item(nodename, { after_dig_node = after_dig_node })
 	end
 end)
 
