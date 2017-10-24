@@ -273,3 +273,31 @@ digall.register_method("digall:falling_node", {
 	default_arguments = { x = 5, y = 5, z = 5 },
 	body = _detail.method_for_falling_node,
 })
+
+function _detail.method_simple(origpos, orignode, origmeta, digger, curpos, curnode)
+	local range = _detail.player_data[digger:get_player_name()].association[orignode.name].arguments
+	local rx = math.floor(range.x / 2)
+	local ry = math.floor(range.y / 2)
+	local rz = math.floor(range.z / 2)
+
+	for x = -rx, rx do
+		for y = -ry, ry do
+			for z = -rz, rz do
+				local p = vector.add(curpos, { x = x, y = y, z = z })
+				local n = minetest.get_node(p)
+				local meta = minetest.get_meta(p)
+				local state = meta:get_int("digall")
+
+				if orignode.name == n.name and ((not state) or state == 0) then
+					_detail.dig_node_common(p, n, meta, digger)
+				end
+			end
+		end
+	end
+end
+
+digall.register_method("digall:simple", {
+	params = minetest.serialize({ x = "number", y = "number", z = "number" }),
+	default_arguments = { x = 5, y = 5, z = 5 },
+	body = _detail.method_simple,
+})
