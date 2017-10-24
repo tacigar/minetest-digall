@@ -17,6 +17,7 @@ setmetatable(_detail.player_data, {
 	__index = function(self, playername)
 		self[playername] = {
 			activated = true,
+			quickmode = false,
 			association = {},
 		}
 		return self[playername]
