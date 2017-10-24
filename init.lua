@@ -9,6 +9,13 @@ local function _digall(pos, oldnode, oldmetadata, digger)
 		return
 	end
 
+	if pdata.quickmode then
+		local control = digger:get_player_control()
+		if not control.sneak then
+			return
+		end
+	end
+
 	local state = oldmetadata.fields["digall"]
 	if state and state == "1" then -- already reserved
 		return

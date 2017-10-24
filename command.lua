@@ -11,7 +11,7 @@ minetest.register_chatcommand("digall:deactivate", {
 	privs = { digall = true },
 	func = function(name)
 		return digall.deactivate(name)
-	end
+	end,
 })
 
 minetest.register_chatcommand("digall:init", {
@@ -21,7 +21,21 @@ minetest.register_chatcommand("digall:init", {
 		digall._detail.player_data[name].association = {}
 		digall.set_default_association(name)
 		return true, "initialized."
-	end
+	end,
+})
+
+minetest.register_chatcommand("digall:quickmode", {
+	description = "Quick mode toggle",
+	privs = { digall = true },
+	func = function(name)
+		if digall._detail.player_data[name].quickmode then
+			digall._detail.player_data[name].quickmode = false
+			return true, "Disable quick mode."
+		else
+			digall._detail.player_data[name].quickmode = true
+			return true, "Enable quick mode."
+		end
+	end,
 })
 
 local _player_formspec = {}
