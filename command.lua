@@ -50,17 +50,20 @@ setmetatable(_player_formspec, {
 })
 
 local _nodelist = {}
-local _methodlist = { "none" }
+local _methodlist = {}
 minetest.after(0, function()
 	for nodename, nodedef in pairs(minetest.registered_nodes) do
 		if (not nodedef.connects_to) and nodedef.description ~= "" and (not (minetest.get_node_group(nodename, "not_in_creative_inventory") > 0)) then
 			table.insert(_nodelist, nodename)
 		end
 	end
+	table.sort(_nodelist)
 
 	for methodname, _ in pairs(digall.registered_methods) do
 		table.insert(_methodlist, methodname)
 	end
+	table.sort(_methodlist)
+	table.insert(_methodlist, 1, "None")
 end)
 
 local function _create_formspec(name, nodeidx, methodidx)
