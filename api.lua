@@ -13,16 +13,6 @@ function _detail.dig_node_common(pos, node, meta, digger)
 end
 
 _detail.player_data = {}
-setmetatable(_detail.player_data, {
-	__index = function(self, playername)
-		self[playername] = {
-			activated = true,
-			quickmode = false,
-			association = {},
-		}
-		return self[playername]
-	end
-})
 
 --- Activates digall of the player.
 function digall.activate(playername)

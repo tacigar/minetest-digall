@@ -68,11 +68,21 @@ minetest.after(0, function()
 end)
 
 minetest.register_on_newplayer(function(player)
+	digall._detail.player_data[player:get_player_name()] = {
+		activated = false,
+		quickmode = false,
+		association = {},
+	}
 	digall.set_default_association(player:get_player_name())
 end)
 
 minetest.register_on_joinplayer(function(player)
 	if not rawget(digall._detail.player_data, player:get_player_name()) then
+		digall._detail.player_data[player:get_player_name()] = {
+			activated = false,
+			quickmode = false,
+			association = {},
+		}
 		digall.set_default_association(player:get_player_name())
 	end
 end)
