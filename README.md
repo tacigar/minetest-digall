@@ -1,10 +1,11 @@
 DigAll
 ===========================================================
 
-![Logo](https://i.imgur.com/uoL3zWk.png "Logo")
-
+![Logo](https://raw.githubusercontent.com/tacigar/minetest-digall/images/digall-logo.png)
 
 This mod was developed inspired by DigAll, MineAll, CutAll mod for Minecraft. This mod makes it possible for players to efficiently arrange terrain, collect resources, and dig tunnels. If you dig a node with this mod enabled, you can also dig nodes around that node at the same time. It also provides some useful commands.
+
+![Demo](https://raw.githubusercontent.com/tacigar/minetest-digall/images/digall-demo.gif)
 
 License
 -----------------------------------------------------------
