@@ -39,15 +39,6 @@ minetest.register_chatcommand("digall:quickmode", {
 })
 
 local _player_formspec = {}
-setmetatable(_player_formspec, {
-	__index = function(self, playername)
-		self[playername] = {
-			nodeidx = 1,
-			methodidx = 1,
-		}
-		return self[playername]
-	end
-})
 
 local _nodelist = {}
 local _methodlist = {}
@@ -132,6 +123,13 @@ minetest.register_chatcommand("digall:conf", {
 	description = "Show digall configuration",
 	privs = { digall = true },
 	func = function(name)
+		if not _player_formspec[name] then
+			_player_formspec[name] = {
+				nodeidx = 1,
+				methodidx = 1,
+			}
+		end
+
 		minetest.after(0.25, function(name)
 			local nodeidx = _player_formspec[name].nodeidx
 			local methodidx = _get_methodidx_by_nodeidx(name, nodeidx)
