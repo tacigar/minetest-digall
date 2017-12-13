@@ -1,3 +1,23 @@
+local digall_description = [[
+Mod for bulk mining
+Commands:
+- /digall:activate - Activate digall
+- /digall:deactivate - Deactivate digall
+- /digall:init - Initialize the settings
+- /digall:conf - Display the setting screen
+- /digall:status - Display the current status
+- /digall:quickmode - Enable / Disable QuickMode (sneak to activate digall)
+]]
+
+minetest.register_chatcommand("digall", {
+	description = digall_description,
+	privs = { digall = true },
+	func = function(name)
+		minetest.chat_send_player(name, digall_description)
+		return true
+	end,
+})
+
 minetest.register_chatcommand("digall:activate", {
 	description = "Activate DigAll",
 	privs = { digall = true },
