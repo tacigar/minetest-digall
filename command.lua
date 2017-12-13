@@ -13,8 +13,7 @@ minetest.register_chatcommand("digall", {
 	description = digall_description,
 	privs = { digall = true },
 	func = function(name)
-		minetest.chat_send_player(name, digall_description)
-		return true
+		return true, digall_description
 	end,
 })
 
@@ -41,6 +40,29 @@ minetest.register_chatcommand("digall:init", {
 		digall._detail.player_data[name].association = {}
 		digall.set_default_association(name)
 		return true, "initialized."
+	end,
+})
+
+minetest.register_chatcommand("digall:status", {
+	description = "Display the current status",
+	privs = { digall = true },
+	func = function(name)
+		local activated
+		local quickmode
+		if digall._detail.player_data[name].activated then
+			activated = "Activated"
+		else
+			activated = "Deactivated"
+		end
+
+		if digall._detail.player_data[name].quickmode then
+			quickmode = "Enabled"
+		else
+			quickmode = "Disabled"
+		end
+
+		local msg = string.format("Digall: %s / Quickmode: %s", activated, quickmode)
+		return true, msg
 	end,
 })
 
