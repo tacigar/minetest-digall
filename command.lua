@@ -1,3 +1,22 @@
+local digall_description = [[
+Mod for bulk mining
+Commands:
+- /digall:activate - Activate digall
+- /digall:deactivate - Deactivate digall
+- /digall:init - Initialize the settings
+- /digall:conf - Display the setting screen
+- /digall:status - Display the current status
+- /digall:quickmode - Enable / Disable QuickMode (sneak to activate digall)
+]]
+
+minetest.register_chatcommand("digall", {
+	description = digall_description,
+	privs = { digall = true },
+	func = function(name)
+		return true, digall_description
+	end,
+})
+
 minetest.register_chatcommand("digall:activate", {
 	description = "Activate DigAll",
 	privs = { digall = true },
@@ -20,7 +39,30 @@ minetest.register_chatcommand("digall:init", {
 	func = function(name)
 		digall._detail.player_data[name].association = {}
 		digall.set_default_association(name)
-		return true, "initialized."
+		return true, "Initialized."
+	end,
+})
+
+minetest.register_chatcommand("digall:status", {
+	description = "Display the current status",
+	privs = { digall = true },
+	func = function(name)
+		local activated
+		local quickmode
+		if digall._detail.player_data[name].activated then
+			activated = "Activated"
+		else
+			activated = "Deactivated"
+		end
+
+		if digall._detail.player_data[name].quickmode then
+			quickmode = "Enabled"
+		else
+			quickmode = "Disabled"
+		end
+
+		local msg = string.format("Digall: %s / Quickmode: %s", activated, quickmode)
+		return true, msg
 	end,
 })
 
@@ -30,10 +72,10 @@ minetest.register_chatcommand("digall:quickmode", {
 	func = function(name)
 		if digall._detail.player_data[name].quickmode then
 			digall._detail.player_data[name].quickmode = false
-			return true, "Disable quick mode."
+			return true, "Disabled quick mode."
 		else
 			digall._detail.player_data[name].quickmode = true
-			return true, "Enable quick mode."
+			return true, "Enabled quick mode."
 		end
 	end,
 })
