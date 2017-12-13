@@ -17,19 +17,19 @@ _detail.player_data = {}
 --- Activates digall of the player.
 function digall.activate(playername)
 	if _detail.player_data[playername].activated == true then
-		return false, "already activated"
+		return false, "Already activated"
 	end
 	_detail.player_data[playername].activated = true
-	return true, "activate digall"
+	return true, "Activated digall"
 end
 
 --- Deactivates digall of the player.
 function digall.deactivate(playername)
 	if _detail.player_data[playername].activated == false then
-		return false, "already deactivated"
+		return false, "Already deactivated"
 	end
 	_detail.player_data[playername].activated = false
-	return true, "deactivate digall"
+	return true, "Deactivated digall"
 end
 
 digall.registered_methods = {}
